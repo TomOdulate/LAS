@@ -1,0 +1,163 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Tao.LAS.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LASDBConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=|DataDirectory|\ActivityDB.sdf;Max Database Size=4091;&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;Microsoft.SqlServerCe.Client.3.5&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=|DataDirectory|\ActivityDB.sdf;Max Database Size=4091;</Value>
+    </Setting>
+    <Setting Name="sqlTopVotersQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT Username, COUNT(Action) AS [Total Votes] FROM UserActivity WHERE (Action = N'voted up') OR (Action = N'voted down') GROUP BY Username ORDER BY [Total Votes] DESC
+</Value>
+    </Setting>
+    <Setting Name="sqlTopDownVotersQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT Username, COUNT(Username) AS [Total Votes] FROM UserActivity GROUP BY Action, Username HAVING (Action = N'voted down') ORDER BY [Total Votes] DESC</Value>
+    </Setting>
+    <Setting Name="sqlTopUpVotersQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT Username, COUNT(Username) AS [Total Votes] FROM UserActivity GROUP BY Action, Username HAVING (Action = N'voted up') ORDER BY [Total Votes] DESC</Value>
+    </Setting>
+    <Setting Name="sqlTopUpVoteRecipientsQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT        Target AS Username, COUNT(Target) AS [Total up votes] 
+FROM            UserActivity 
+WHERE        (Action = N'voted up') 
+GROUP BY Target 
+ORDER BY [Total up votes] DESC</Value>
+    </Setting>
+    <Setting Name="sqlTopDownVoteRecipientsQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT Target AS Username, COUNT(Target) AS [Total down votes] 
+FROM   UserActivity 
+WHERE  (Action = N'voted down') 
+GROUP BY Target 
+ORDER BY [Total down votes] DESC</Value>
+    </Setting>
+    <Setting Name="sqlTopUploadersQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT        Username, COUNT(Username) AS [Total Uploads] 
+FROM            UserActivity 
+WHERE        (Action = N'Uploaded content') 
+GROUP BY Username 
+ORDER BY [Total Uploads] DESC</Value>
+    </Setting>
+    <Setting Name="sqlTopCommentorsQuery" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT        Username, COUNT(Username) AS [Total comments] 
+FROM            UserActivity 
+WHERE        (Action = N'Added comment') 
+GROUP BY Username 
+ORDER BY [Total Comments] DESC</Value>
+    </Setting>
+    <Setting Name="sqlCreateActivityTable" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">CREATE TABLE UserActivity(Id int NOT NULL PRIMARY KEY IDENTITY,RawData nVarChar(2000) NULL,PageId nvarchar(6) NULL,Username nvarchar(100) NULL,Action nvarchar(100)NULL,Target nvarchar(1000) Null,TargetLink nvarchar(1000) NULL
+)
+</Value>
+    </Setting>
+    <Setting Name="sqlCheckTableExists" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT COUNT(TABLE_NAME) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'TARGET_TABLE'</Value>
+    </Setting>
+    <Setting Name="sqlCreateErrorLogTable" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CREATE TABLE ErrorLog ( Id int NOT NULL PRIMARY KEY IDENTITY, Time datetime NULL, Message ntext NULL )</Value>
+    </Setting>
+    <Setting Name="strActivityUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">www.liveleak.com/recent_activity?a=browse&amp;ajax=1&amp;page=</Value>
+    </Setting>
+    <Setting Name="htmlStartPage" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;h1&gt;&lt;span class="Title"&gt;LiveLeak Activity Spy&lt;/span&gt;&lt;/h1&gt;version 1.0
+&lt;h3&gt;Usage instructions&lt;/h3&gt;
+&lt;h1&gt; &lt;/h1&gt;
+&lt;ol&gt;
+    &lt;li&gt;Choose&amp;nbsp; a history depth. Use the slider or type in a number.&lt;/li&gt;
+    &lt;li&gt;Click the Go button.&lt;/li&gt;
+    &lt;li&gt;Wait for the application to retrieve all the data.&lt;/li&gt;
+    &lt;li&gt;View stats or analyse the data.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Notes&lt;/h3&gt;
+&lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;It's slow! can't you speed it up?&lt;/strong&gt;&lt;br /&gt;
+    &lt;div align="justify"&gt;     It is slow by design. It is possible to make the applicaiton around 20 times faster by making it multi threaded. However, I love LiveLeak and if you do too, you wouldn't want to.&amp;nbsp; There's no need to hammer the hell out of LiveLeaks servers.&amp;nbsp; Currently the application downloads data at around the same speed that a user would browse the data.&lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;'Acc' stands for Accuracy.&lt;/strong&gt;&lt;br /&gt;
+    &lt;div align="justify"&gt;     Accuracy. Each error detected could well be 1 vote, or upload etc.&amp;nbsp; Since the overall results ommit the errors the 'Acc' value is an indicator that the sample data &lt;em&gt;may &lt;/em&gt;be around a certian percentage out, because of any errors detected during parsing and saving the data.&amp;nbsp; For the most part the data will be 100% accurate, therefore treat the 'Acc' figure as just an indicator.&lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</Value>
+    </Setting>
+    <Setting Name="strLiveLeakUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://www.liveleak.com/</Value>
+    </Setting>
+    <Setting Name="strLiveLeakUserUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.liveleak.com/c/</Value>
+    </Setting>
+    <Setting Name="sqlGetTotalRecordCount" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT COUNT(*) FROM UserActivity</Value>
+    </Setting>
+    <Setting Name="sqlGetTotalErrorCount" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT COUNT(*) FROM ErrorLog</Value>
+    </Setting>
+    <Setting Name="sqlGetMaxHistoryDepthRawData" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT RawData, Id FROM UserActivity ORDER BY Id DESC</Value>
+    </Setting>
+    <Setting Name="sqlGetActivityByTarget" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT Username, Action, Target, TargetLink FROM UserActivity Where Target = '[TARGET]'</Value>
+    </Setting>
+    <Setting Name="strNoMorePages" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;body&gt;Sorry, no recent_activity items found!&lt;/body&gt;</Value>
+    </Setting>
+    <Setting Name="strDBFullPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">|DataDirectory|\ActivityDB.sdf</Value>
+    </Setting>
+    <Setting Name="sqlRptVotedDown" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT        Target, COUNT(Action) AS Count
+FROM          UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')
+ORDER BY Count DESC</Value>
+    </Setting>
+    <Setting Name="sqlRptVotedUp" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT        Target, COUNT(Action) AS Count
+FROM          UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')
+ORDER BY Count DESC</Value>
+    </Setting>
+    <Setting Name="sqlRptUploads" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT DISTINCT Target
+FROM            UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')</Value>
+    </Setting>
+    <Setting Name="sqlRptSubscribed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT DISTINCT Target
+FROM            UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')</Value>
+    </Setting>
+    <Setting Name="sqlRptUnSubscribed" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT DISTINCT Target
+FROM            UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')</Value>
+    </Setting>
+    <Setting Name="sqlRptVotedOnItems" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT DISTINCT Target
+FROM            UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')
+ORDER BY Target</Value>
+    </Setting>
+    <Setting Name="sqlRptFavoured" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT DISTINCT Target
+FROM            UserActivity
+GROUP BY Username, Action, Target
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')
+ORDER BY Target</Value>
+    </Setting>
+    <Setting Name="sqlRptComments" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SELECT        COUNT(Target) AS Count, Target, TargetLink
+FROM            UserActivity
+GROUP BY Username, Action, Target, TargetLink
+HAVING        (Action = N'[-ACTION-]') AND (Username = N'[-USER-]')
+ORDER BY Count DESC</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
